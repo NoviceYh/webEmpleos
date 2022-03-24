@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="shortcut icon" href="/images/logoMi.png">
+    <title>MIWORKS</title>
+</head>
+<body id="fondo">
+
+<header>
+    <nav class="nav">
+        <img class="nav_img" src="/images/logoMi.png" alt="Logo">
+        <ul>
+            <li class="nav_list list-style-none"><a class="btn btn-secondary text-decoration-none"th:href="@{/}">Inicio</a></li>
+            <li class="nav_list list-style-none"><a class="btn btn-secondary text-decoration-none"th:href="@{/usuarios/listar}">Usuarios</a></li>
+            <li class="nav_list list-style-none dropdown">
+                <a class="btn btn-secondary text-decoration-none"href="#">Publicaciones</a>
+                <div class="dropdown-content">
+                    <a class="btn btn-primary text-decoration-none text-align-center"th:href="@{/publicaciones/listar}">Ver Todas</a>
+                    <a class="btn btn-primary text-decoration-none text-align-center"th:href="@{/publicaciones/crear}">Crear</a>
+                </div>
+            </li>
+            <li class="nav_list list-style-none dropdown">
+                <a class="btn btn-light text-decoration-none" href="#">Categorias</a>
+                <div class="dropdown-content">
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/categorias/listar/} + 'Programacion'">Programacion</a>
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/categorias/listar/} + 'Educacion'">Educacion</a>
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/categorias/listar/} + 'Alimentacion'">Alimentacion</a>
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/categorias/listar/} + 'Fitnes'">Fitnes</a>
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/categorias/listar/} + 'Finanzas'">Finanzas</a>
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/categorias/listar/} + 'Otro'">Otro</a>
+                </div>
+            </li>
+            <li class="nav_list list-style-none dropdown">
+            <span sec:authorize="isAuthenticated()" th:if="${session.usuario != null}"><a
+                    class="btn btn-secondary text-decoration-none" href="#">Perfil</a></span>
+                <div class="dropdown-content">
+                <span sec:authorize="isAuthenticated()" th:if="${session.usuario != null}"><a
+                        class="btn btn-primary text-decoration-none"
+                        th:href="@{/usuarios/perfil/} + ${session.usuario.username}" th:text="'Ver Perfil'">Ver Perfil</a></span>
+                    <a class="btn btn-primary text-decoration-none" th:href="@{/usuarios/editar/} + ${session.usuario.username}">Editar
+                        Perfil</a>
+                </div>
+            <li sec:authorize="isAuthenticated()" class="nav_list list-style-none"><a class="btn btn-secondary text-decoration-none"th:href="@{/logout}">Salir</a></li>
+        </ul>
+    </nav>
+</header>
+<!--<h1 class="text-align-center light" th:text="${usuarioInfo.username}"></h1>-->
+<!-- <section class="seccion-perfil-usuario">
+    <div class="perfil-usuario-header">
+        <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                <img th:if="${usuarioInfo != null}"
+                     th:src="${'/usuarios/imagen/' + usuarioInfo.id}" alt="Foto perfil">
+            </div>
+            <button type="button" class="boton-portada">
+                <i class="far fa-image light"></i> Cambiar fondo
+            </button>
+        </div>
+    </div>
+    <div class="perfil-usuario-body">
+        <div class="perfil-usuario-bio light">
+            <h1 class="text-align-center light" th:text="${usuarioInfo.username}"></h1>
+        </div>
+        <div class="perfil-usuario-footer">
+            <ul class="lista-datos light">
+                <li><span th:text="'Nombre: ' + ${usuarioInfo.nombre}"></span></li>
+                <li><span th:text="'Apellido: ' + ${usuarioInfo.apellido}"></span></li>
+                <li><span th:text="'Email: ' + ${usuarioInfo.email}"></span></li>
+            </ul>
+        </div>
+    </div>
+</section> -->
+
+<main style="width: 40%;justify-content: center;align-content: center;
+background-color: rgb(51 51 51 / .5);border-radius: 20px;padding: 20px;" 
+class="container">
+<h1 class="text-align-center light" th:text="${publicacion.titulo}"></h1>
+    <!-- TEXTO AGREGADO PARA MOSTRAR LA PUBLICACION-->
+    <div style="color: white; padding-top: 5px;">
+        <div style="display: flex; justify-content: center; align-items: center; padding-bottom: 15px;">
+
+    <img th:if="${publicacion.imagen != null}" th:src="${'/publicaciones/imagen/' + publicacion.id}"
+    style="height: 200px; display: inline-block; align-items: center; border-radius: 100%;">
+    </div>
+    <h4 th:text="${publicacion.descripcion}"></h4>
+    <br>
+    <div style="display: flex; justify-content: space-between;">
+    <ul>
+        <li th:text="'Disponibilidad horaria: '+${publicacion.disponibilidad}"></li>
+        <li th:text="'Fecha de Publicacion: '+${publicacion.fechaPublicacion}"></li>
+        <li th:text="'Categoria: '+${publicacion.categoria.nombre}"></li>
+        
+    </ul>
+    <a style="font-weight: bold;" class="btn btn-dark text-decoration-none" href="#">Aplicar</a>
+</div>
+</div>
+</main>
+
+<footer>
+    <div class="footer-up">
+        <div>
+            <h3>Mas informacion de la compania</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aperiam, atque doloremque earum et
+                exercitationem id, illo ipsam libero necessitatibus neque odit placeat praesentium, quaerat quas sequi
+                totam veritatis voluptate?</p>
+        </div>
+        <div>
+            <h3>Redes Sociales</h3>
+            <p>Instagram : MiWorks@gmail.com</p>
+            <p>Twitter : MiWorks@gmail.com</p>
+            <p>Facebook : MiWorks@gmail.com</p>
+            <p>Whatsapp : 343212312</p>
+            <p>Telegram : MiWorks</p>
+        </div>
+        <div>
+            <h3>Informacion de Contacto</h3>
+            <p>Telefono de Contacto : 192831231</p>
+            <p>Email de Contacto : MiWorks@gmail.com</p>
+        </div>
+
+    </div>
+    <div class="footer-down">
+        <p>© 2022 Todos los Derechos Reservados</p>
+        <a class="light text-decoration-none" href="#">Informacion Compañia </a>
+        <a class="light text-decoration-none" href="#">Privacion y Politica </a>
+        <a class="light text-decoration-none" href="#">Terminos y Condiciones</a>
+    </div>
+</footer>
+</body>
+</html>
